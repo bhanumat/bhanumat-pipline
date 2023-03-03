@@ -1,0 +1,24 @@
+name: SIT - Tutorial BE Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Repository branch or tag"
+        required: true
+        default: "v1.0.0"
+
+env:
+  REPOSITORY: "bhanumat/dotnet-tutorial-backend"
+  GITREF: ${{ github.event.inputs.ref }}
+  ARTIFACT_NAME: "artifact-tutorial-backend"
+  APP_RESOURCE_NAME: app-user10-az-usw3-sit-001
+
+jobs:
+  deploy-app-service:
+    name: Deploy
+    runs-on: [ self-hosted, tutorial-be-dev, vm-user10SelfHost-az-usw3-sbx-001 ]
+    environment:
+      name: sit
+      url: https://app-user10-az-usw3-sit-001.azurewebsites.net/swagger/index.html
+  
